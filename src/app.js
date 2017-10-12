@@ -22,6 +22,8 @@ const services = require('./services');
 const appHooks = require('./app.hooks');
 const webpackConfig = require('../webpack.config');
 
+const socketHandler = require('./socket');
+
 const app = feathers();
 const compiler = webpack(webpackConfig);
 
@@ -42,7 +44,7 @@ app.use('/', feathers.static(app.get('public')));
 // Set up Plugins and providers
 app.configure(hooks());
 app.configure(rest());
-app.configure(socketio());
+app.configure(socketio(socketHandler));
 
 // Configure other middleware (see `middleware/index.js`)
 app.configure(middleware);

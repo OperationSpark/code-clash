@@ -3,7 +3,9 @@ import CodeTester from 'code-tester';
 import axios from 'axios';
 import P from 'bluebird';
 import PropTypes from 'prop-types';
+import io from 'socket.io-client';
 
+import { calcScore } from '../helpers';
 
 class App extends Component {
   constructor(props) {
@@ -14,6 +16,7 @@ class App extends Component {
   }
 
   componentDidMount() {
+    this.socket = io();
     const fakeSubmitEvent = { preventDefault: () => {}, target: {'code-quiz-url': { value: 'http://localhost:8080/code-quiz-immersion-precourse/exit/' } }};
     this.handleUrlInput(fakeSubmitEvent);
   }
@@ -23,6 +26,7 @@ class App extends Component {
     const url = event.target['code-quiz-url'].value;
     getPublicCodeQuiz(url)
       .then(data => {
+        this.socket.emit('game', { message: 'player ready', playerId: this.props.match.params.playerId})
         this.setState({
           testSpec: data.spec.data,
           loading: false,
@@ -45,9 +49,11 @@ class App extends Component {
   renderTester() {
     const handleTestResults = (passCount, failCount, runTime) => {
       const { playerId } = this.props.match.params;
-
-      console.log(playerId);
-      console.log(passCount, failCount, runTime);
+      this.socket.emit('game', {
+        message: 'score update',
+        playerId,
+        score: calcScore(passCount, failCount),
+      });
     };
 
     const handleLintedCode = (lintedCode) => {
