@@ -6,7 +6,7 @@ import PlayerViewContainer from './PlayerView/PlayerViewContainer.jsx';
 import SpectatorContainer from './Spectate/SpectatorContainer.jsx';
 
 const Main = () => (
-  <main className="container-fluid">
+  <main className="container-fluid main">
     <Switch>
       <Route exact path='/' component={Home} />
       <Route path='/play/:playerId' component={PlayerViewContainer} />
