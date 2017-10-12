@@ -5,7 +5,9 @@ import PropTypes from 'prop-types';
 class SpectatorContainer extends Component {
   render() {
     return (
-      <TestRunner />
+      <div>
+        <h1>hey</h1>
+      </div>
     );
   } 
 }

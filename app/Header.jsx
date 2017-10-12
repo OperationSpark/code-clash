@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 
 // The Header creates links that can be used to navigate
 // between routes.
@@ -13,10 +13,10 @@ const Header = () => (
       <div className="collapse navbar-collapse" id="navbarNav">
         <ul className="navbar-nav">
           <li className="nav-item active">
-            <Link to="/" className="nav-link" href="#">Play </Link>
+            <NavLink to="/" className="nav-link" href="#">Play </NavLink>
           </li>
           <li className="nav-item">
-            <Link to="/spectate" className="nav-link" href="#">Spectate</Link>
+            <NavLink exact to="/spectate" className="nav-link" href="#">Spectate</NavLink>
           </li>
         </ul>
       </div>

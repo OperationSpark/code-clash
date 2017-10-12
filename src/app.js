@@ -40,6 +40,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(favicon(path.join(app.get('public'), 'favicon.ico')));
 // Host the public folder
 app.use('/', feathers.static(app.get('public')));
+// app.use(feathers.static(path.join(__dirname, 'build')));
 
 // Set up Plugins and providers
 app.configure(hooks());
@@ -51,9 +52,11 @@ app.configure(middleware);
 // Set up our services (see `services/index.js`)
 app.configure(services);
 // Configure a middleware for 404s and the error handler
+app.get('*', (req, res) => res.sendFile(path.join(app.get('public'), 'index.html')));
 app.use(notFound());
 app.use(handler());
 
 app.hooks(appHooks);
+
 
 module.exports = app;
