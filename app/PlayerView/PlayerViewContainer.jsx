@@ -16,8 +16,21 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.socket = io();
-    const fakeSubmitEvent = { preventDefault: () => {}, target: {'code-quiz-url': { value: 'http://localhost:8080/code-quiz-immersion-precourse/exit/' } }};
+    this.connectToGame();
+  }
+
+  connectToGame() {
+    this.gameIO = io('/game');
+    this.gameIO.on('connection', (socket) => {
+      socket.join('gameRoom', () => {
+        let rooms = Objects.keys(socket.rooms);
+        console.log(rooms); // [ <socket.id>, 'room 237' ]
+        io.to('gameRoom', 'a new user has joined the room'); // broadcast to everyone in the room
+      });
+    });
+
+    this.gameIO.on('player join', (data) => console.log('player joined', data));
+    const fakeSubmitEvent = { preventDefault: () => { }, target: { 'code-quiz-url': { value: 'http://localhost:8080/code-quiz-immersion-precourse/exit/' } } };
     this.handleUrlInput(fakeSubmitEvent);
   }
 
@@ -26,7 +39,7 @@ class App extends Component {
     const url = event.target['code-quiz-url'].value;
     getPublicCodeQuiz(url)
       .then(data => {
-        this.socket.emit('game', { message: 'player ready', playerId: this.props.match.params.playerId})
+        this.gameIO.emit('game', { message: 'player ready', playerId: this.props.match.params.playerId})
         this.setState({
           testSpec: data.spec.data,
           loading: false,
@@ -49,7 +62,7 @@ class App extends Component {
   renderTester() {
     const handleTestResults = (passCount, failCount, runTime) => {
       const { playerId } = this.props.match.params;
-      this.socket.emit('game', {
+      this.gameIO.emit('score update', {
         message: 'score update',
         playerId,
         score: calcScore(passCount, failCount),
