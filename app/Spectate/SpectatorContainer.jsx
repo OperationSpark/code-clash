@@ -10,10 +10,12 @@ class SpectatorContainer extends Component {
     super(props);
     this.state = {
       player1: {
+        id: 0,
         name: 'Liv',
         score: 0,
       }, 
       player2: {
+        id: 1,
         name: 'Harvey',
         score: 0,
       }

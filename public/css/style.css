@@ -27,10 +27,11 @@ h1, p {
   white-space: nowrap; 
 }
 
-.em {
-  font-size: 100px;
+.emoji {
   animation: float linear infinite 2s;
   position: relative;
+  height: 175px;
+  width: 175px;
 }
 
 .em-collision {

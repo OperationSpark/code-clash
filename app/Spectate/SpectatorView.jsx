@@ -26,18 +26,16 @@ class SpectatorView extends Component {
           name={player1.name}
           score={player1.score}
           opponent={player2.score}
-          player="1"
+          player={player1.id}
         />
         <SpectatorPlayer 
           name={player2.name}
           score={player2.score}
           opponent={player1.score}          
-          player="2"
+          player={player2.id}
         />
         <button onClick={ () => this.scoreUp(player1) }>Player 1 up</button>
-        {/* <Bang />
-        <Bang />
-        <Bang /> */}
+        <button onClick={ () => this.scoreUp(player2) }>Player 2 up</button>
       </div>
     );
   }

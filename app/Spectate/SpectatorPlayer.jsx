@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import NumberEasing from 'react-number-easing';
+import Bang from './Bang';
+import * as Emojione from 'react-svg-emojione';
 
 class SpectatorPlayer extends Component {
   constructor() {
@@ -28,21 +30,21 @@ class SpectatorPlayer extends Component {
   emoji() {
     const { score } = this.props;
     if (this.win() === true) {
-      return 'emoji em em-innocent';
+    return <Emojione.innocent />
     } else if (this.win() === false) {
-      return 'emoji em em-astonished';
+      return <Emojione.astonished />;
     } else if (score === 0) {
-      return 'emoji em em-sleepy';
+      return <Emojione.sleepy />;
     } else if (score < 200) {
-      return 'emoji em em-neutral_face';
+      return <Emojione.neutral_face />;
     } else if (score < 400) {
-      return 'emoji em em-open_mouth';
+      return <Emojione.open_mouth />;
     } else if (score < 600) {
-      return 'emoji em em-relaxed';
+      return <Emojione.relaxed />;
     } else if (score < 800) {
-      return 'emoji em em-smile';
+      return <Emojione.smile />;
     } else if (score < 1000) {
-      return 'emoji em em-heart_eyes';
+      return <Emojione.heart_eyes />;
     }
   }
 
@@ -51,8 +53,12 @@ class SpectatorPlayer extends Component {
     return (
       <div className="col-6">
         <div className="face">
-          <h1>Player { player } : { name }</h1>
-          <i style={ this.style() } className={ this.emoji() } id={'player' + player}></i>
+          <h1>Player { player + 1 } : { name }</h1>
+          <div style={ this.style() } className="emoji">
+            {/* <i className={ this.emoji() } id={'player' + player}></i> */}
+            {/* <Emojione.slight_frown /> */}
+            { this.emoji() }
+          </div>
           <h1>
             <NumberEasing
               value={ score }
@@ -60,6 +66,9 @@ class SpectatorPlayer extends Component {
             />
           </h1>
         </div>
+        <Bang />
+        <Bang />
+        <Bang />
       </div>
     );
   }
