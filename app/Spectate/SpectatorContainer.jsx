@@ -2,10 +2,24 @@ import React, { Component } from 'react';
 import { TestRunner } from 'code-tester';
 import PropTypes from 'prop-types';
 import io from 'socket.io-client';
+import SpectatorView from './SpectatorView';
+
 
 class SpectatorContainer extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      player1: {
+        id: 0,
+        name: 'Liv',
+        score: 0,
+      }, 
+      player2: {
+        id: 1,
+        name: 'Harvey',
+        score: 0,
+      }
+    }; 
     this.handleScore = this.handleScore.bind(this);
     this.handlePlayerJoin = this.handlePlayerJoin.bind(this);
   }
@@ -39,9 +53,11 @@ class SpectatorContainer extends Component {
   }
 
   render() {
+    const { player1, player2 } = this.state;
     return (
       <div className="text-center">
         Waiting for players to join...
+        <SpectatorView player1={player1} player2={player2} />
       </div>
     );
   } 

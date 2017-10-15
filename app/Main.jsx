@@ -10,7 +10,7 @@ const Main = () => (
     <Switch>
       <Route exact path='/' component={Home} />
       <Route path='/play/:playerId' component={PlayerViewContainer} />
-      <Route path='/spectate' component={SpectatorContainer} />
+      <Route exact path='/spectate' component={SpectatorContainer} />
     </Switch>
   </main>
 );
