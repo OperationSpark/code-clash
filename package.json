@@ -47,6 +47,7 @@
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "react-router-dom": "^4.2.2",
+    "react-svg-emojione": "^1.2.0",
     "serve-favicon": "^2.4.3",
     "winston": "^2.3.1"
   },
