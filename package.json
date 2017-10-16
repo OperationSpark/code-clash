@@ -32,7 +32,7 @@
     "bluebird": "^3.5.1",
     "body-parser": "^1.17.2",
     "bootstrap": "^3.3.7",
-    "code-tester": "^1.5.2",
+    "code-tester": "^1.5.3",
     "compression": "^1.7.0",
     "cors": "^2.8.4",
     "feathers": "^2.1.7",
@@ -46,7 +46,9 @@
     "helmet": "^3.8.1",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
+    "react-number-easing": "0.0.4",
     "react-router-dom": "^4.2.2",
+    "react-svg-emojione": "^1.2.0",
     "serve-favicon": "^2.4.3",
     "winston": "^2.3.1"
   },
