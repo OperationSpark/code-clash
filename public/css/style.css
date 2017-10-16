@@ -23,9 +23,10 @@
   margin-top: 3em;
 }
 
-h1, p {
-  white-space: nowrap; 
-}
+  /* 
+  h1, p {
+    white-space: nowrap; 
+  } */
 
 .emoji {
   animation: float linear infinite 2s;
