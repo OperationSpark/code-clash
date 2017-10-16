@@ -32,7 +32,7 @@ class SpectatorPlayer extends Component {
     if (this.win() === true) {
     return <Emojione.innocent />
     } else if (this.win() === false) {
-      return <Emojione.astonished />;
+      return <Emojione.dizzy_face />;
     } else if (score === 0) {
       return <Emojione.sleepy />;
     } else if (score < 200) {
@@ -40,7 +40,7 @@ class SpectatorPlayer extends Component {
     } else if (score < 400) {
       return <Emojione.open_mouth />;
     } else if (score < 600) {
-      return <Emojione.relaxed />;
+      return <Emojione.blush />;
     } else if (score < 800) {
       return <Emojione.smile />;
     } else if (score < 1000) {
@@ -66,6 +66,8 @@ class SpectatorPlayer extends Component {
             />
           </h1>
         </div>
+        <Bang />
+        <Bang />
         <Bang />
         <Bang />
         <Bang />
