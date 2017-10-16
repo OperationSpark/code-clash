@@ -3,12 +3,13 @@ import { TestRunner } from 'code-tester';
 import PropTypes from 'prop-types';
 import io from 'socket.io-client';
 import SpectatorView from './SpectatorView';
-
+import WaitingForPlayers from './WaitingForPlayers';
 
 class SpectatorContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      players: [],
       player1: {
         id: 0,
         name: 'Liv',
@@ -42,9 +43,10 @@ class SpectatorContainer extends Component {
     this.gameIO.on('player join', this.handlePlayerJoin);
   }
 
-  handlePlayerJoin(data) {
+  handlePlayerJoin({ players }) {
     console.log('player joined');
-    console.log(data);
+    console.log(players);
+    this.setState({ players });
   }
 
   handleScore(data) {
@@ -53,11 +55,13 @@ class SpectatorContainer extends Component {
   }
 
   render() {
-    const { player1, player2 } = this.state;
+    const { players, player1, player2 } = this.state;
     return (
       <div className="text-center">
-        Waiting for players to join...
-        <SpectatorView player1={player1} player2={player2} />
+        { players.length < 2 ?
+          <WaitingForPlayers players={players} /> :
+          <SpectatorView player1={player1} player2={player2} />
+        }
       </div>
     );
   } 

@@ -32,6 +32,7 @@ class App extends Component {
     this.gameIO.on('player join', (data) => console.log('player joined', data));
     const fakeSubmitEvent = { preventDefault: () => { }, target: { 'code-quiz-url': { value: 'http://localhost:8080/code-quiz-immersion-precourse/exit/' } } };
     this.handleUrlInput(fakeSubmitEvent);
+    this.gameIO.emit('player join', { id: this.props.match.params.playerId });
   }
 
   handleUrlInput(event) {
@@ -39,7 +40,7 @@ class App extends Component {
     const url = event.target['code-quiz-url'].value;
     getPublicCodeQuiz(url)
       .then(data => {
-        this.gameIO.emit('game', { message: 'player ready', playerId: this.props.match.params.playerId})
+        this.gameIO.emit('player ready', { message: 'player ready', id: this.props.match.params.playerId})
         this.setState({
           testSpec: data.spec.data,
           loading: false,
@@ -64,7 +65,7 @@ class App extends Component {
       const { playerId } = this.props.match.params;
       this.gameIO.emit('score update', {
         message: 'score update',
-        playerId,
+        id: playerId,
         score: calcScore(passCount, failCount),
       });
     };
