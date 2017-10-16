@@ -9,7 +9,7 @@ module.exports = function socketHandler(io) {
     socket.join('gameRoom');
     console.log('connected  !!');
     console.log('socket ID', socket.id);
-    console.log('socket rooms', socket.rooms);
+    console.log('players', players);
 
     // socket.on('game', handleGame.bind(null, socket));
     socket.on('score update', broadcastScore.bind(null, socket));
@@ -27,9 +27,9 @@ module.exports = function socketHandler(io) {
     sendPlayers(socket, players);
   };
 
-  const broadcastScore = (socket, { id: playerId, score }) => {
+  const broadcastScore = (socket, { id, score }) => {
     console.log('broacasting score');
-    socket.to('gameRoom').emit('score update', { playerId, score: processScore(score) });
+    socket.to('gameRoom').emit('score update', { id, score: processScore(score) });
   };
 
   const sendPlayers = (socket, players) => {
