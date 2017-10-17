@@ -90,6 +90,8 @@ class App extends Component {
         showLints={true}
         testSpec={testSpec}
         showConsole={false}
+        autoRun
+        hideEditorButtons={true}
       />
     );
   }
