@@ -23,11 +23,6 @@
   margin-top: 3em;
 }
 
-  /* 
-  h1, p {
-    white-space: nowrap; 
-  } */
-
 .emoji {
   animation: float linear infinite 2s;
   position: relative;
@@ -42,18 +37,30 @@
   animation: explode linear 1s forwards; 
 } 
 
+.sparkle {
+  width: 100;
+  height: 100;
+  opacity: 0;
+  position: absolute;
+  font-size: 100;
+  animation: explode linear 1s forwards; 
+} 
+
 .col-6 {
   text-align: center;
 }
 
 .face {
   height: 40vh;
-  background: blue;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
   box-sizing: border-box;
   padding: 15px;
+  white-space: nowrap;
+  border-radius: 15px;
+  background: rgba(247, 245, 245, .8);
+  border: 1px solid rgba(200, 205, 207, .7);
 }
 

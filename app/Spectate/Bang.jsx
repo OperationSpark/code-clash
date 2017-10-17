@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import * as Emojione from 'react-svg-emojione';
 
 class Bang extends Component {
   constructor() {
@@ -10,16 +11,22 @@ class Bang extends Component {
     return {
       top: Math.floor((window.innerHeight * .4 - 100) * Math.random()),
       left: Math.floor((window.innerWidth * .5 - 100) * Math.random()),
-      'animationDelay': Math.floor(Math.random() * 1000) + 'ms', 
+      'animationDelay': Math.floor(Math.random() * 500) + 'ms', 
     }
   }; 
 
   render() {
     return (
-      <i 
-      style={ this.style() }
-      className="em em-collision"
-      ></i>
+      <div 
+        style={ this.style() } 
+        className="sparkle"
+      >
+        <Emojione.sparkles />
+      </div>
+      // <i 
+      // style={ this.style() }
+      // className="em em-collision"
+      // ></i>
     );
   }
 }
