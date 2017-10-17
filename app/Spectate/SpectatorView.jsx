@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
 import SpectatorPlayer from './SpectatorPlayer';
-// import Bang from './bang';
 
 class SpectatorView extends Component {
   constructor() {
@@ -10,7 +9,8 @@ class SpectatorView extends Component {
   }
 
   scoreUp(player) {
-    const score = player.score += Math.floor(Math.random() * 100);
+    // const score = player.score += Math.floor(Math.random() * 100);
+    const score = player.score += 100;
     this.setState({
       [player]: {
         score: score,
