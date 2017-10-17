@@ -10,7 +10,7 @@ class SplashPageAnimation extends Component {
   render() {
     const { player, score, name, emoji } = this.props;
     return (
-      <div className="row">
+      <div className="scene row">
         <div className="emoji col-sm-6">
           <Emojione.smirk />
         </div>

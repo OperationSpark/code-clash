@@ -19,6 +19,21 @@
   }
 }
 
+@keyframes rise-out {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100%{
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+}
+
+@keyframes shuffle {
+  
+}
+
 .logo-text {
   font-family: 'Luckiest Guy', cursive;  
 }
@@ -65,6 +80,10 @@
   animation: explode linear 1s forwards infinite; 
 } 
 
+.spacer-v {
+  height: 50px;
+}
+
 .col-6 {
   text-align: center;
 }
@@ -83,3 +102,6 @@
   border: 1px solid rgba(200, 205, 207, .7);
 }
 
+.scene {
+  height: 250px;
+}
