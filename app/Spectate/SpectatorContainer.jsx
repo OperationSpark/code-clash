@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { TestRunner } from 'code-tester';
 import PropTypes from 'prop-types';
 import io from 'socket.io-client';
 import faker from 'faker';
