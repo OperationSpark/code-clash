@@ -20,6 +20,7 @@ class App extends Component {
   }
 
   connectToGame() {
+    const { server } = window.config;
     this.gameIO = io('/game');
     this.gameIO.on('connection', (socket) => {
       socket.join('gameRoom', () => {
@@ -30,7 +31,7 @@ class App extends Component {
     });
 
     this.gameIO.on('player join', (data) => console.log('player joined', data));
-    const fakeSubmitEvent = { preventDefault: () => { }, target: { 'code-quiz-url': { value: 'http://localhost:8080/code-quiz-immersion-precourse/exit/' } } };
+    const fakeSubmitEvent = { preventDefault: () => { }, target: { 'code-quiz-url': { value: `${server}/code-quiz-immersion-precourse/exit/` } } };
     this.handleUrlInput(fakeSubmitEvent);
     this.gameIO.emit('player join', { id: this.props.match.params.playerId });
   }
