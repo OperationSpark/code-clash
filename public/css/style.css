@@ -1,38 +1,4 @@
 
-@keyframes float {
-  0% {top: 0}
-  25% {top: 25px}
-  75% {top: -25px}
-  100% {top: 0}
-}
-
-@keyframes explode {
-  0% {
-    transform: rotate(0) scale(0);
-  }
-  90% {
-    opacity: 1;
-  }
-  100%{
-    opacity: 0;
-    transform: rotate(360deg) scale(1);    
-  }
-}
-
-@keyframes rise-out {
-  0% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  100%{
-    opacity: 0;
-    transform: translateY(-50px);
-  }
-}
-
-@keyframes shuffle {
-  
-}
 
 .logo-text {
   font-family: 'Luckiest Guy', cursive;  
@@ -104,4 +70,25 @@
 
 .scene {
   height: 250px;
+  position: relative;
+}
+
+.scene .emoji {
+  top: 70px;
+  animation-name: shuffle1;
+}
+
+.scene .right-head .emoji {
+  animation-name: shuffle2;
+}
+
+.mono-text {
+  font-family: 'Inconsolata', monospace;  
+}
+
+.floater {
+  position: absolute;
+  font-weight: bolder;
+  font-family: monospace;
+  animation: rise-out linear 1s forwards; 
 }

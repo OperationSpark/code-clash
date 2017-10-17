@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Flair from './Spectate/Flair';
 import * as Emojione from 'react-svg-emojione';
+import Floater from './helpers/Floater'
 
 class SplashPageAnimation extends Component {
   constructor() {
@@ -8,14 +9,18 @@ class SplashPageAnimation extends Component {
   }
 
   render() {
-    const { player, score, name, emoji } = this.props;
     return (
       <div className="scene row">
-        <div className="emoji col-sm-6">
-          <Emojione.smirk />
+        {<Floater />}
+        <div className="col-sm-6">
+          <div className="emoji">
+            <Emojione.smirk />
+          </div>
         </div>
-        <div className="emoji right-head col-sm-6">
-          <Emojione.smirk />
+        <div className="right-head col-sm-6">
+          <div className="emoji">
+            <Emojione.smirk />
+          </div>
         </div>
       </div>
     );

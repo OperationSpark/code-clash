@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 import SplashPageAnimation from './SplashPageAnimation';
 
 const Home = () => (
-  <div className="jumbotron text-center">
+  <div className="jumbotron text-center mono-text">
     <SplashPageAnimation />
     <h1 className="display-3 logo-text">Code Clash!</h1>
     <hr className="my-4" />
