@@ -19,6 +19,19 @@
   }
 }
 
+.logo-text {
+  font-family: 'Luckiest Guy', cursive;  
+}
+
+.right-head {
+  -moz-transform: scaleX(-1);
+  -o-transform: scaleX(-1);
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
+  filter: FlipH;
+  -ms-filter: "FlipH";
+}
+
 .main {
   margin-top: 3em;
 }
@@ -29,6 +42,10 @@
   height: 175px;
   width: 175px;
   z-index: 100;
+}
+
+.emoji svg {
+  height: 100%;
 }
 
 .flair {
