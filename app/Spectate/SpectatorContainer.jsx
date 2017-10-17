@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
-import { TestRunner } from 'code-tester';
 import PropTypes from 'prop-types';
 import io from 'socket.io-client';
+import faker from 'faker';
 import SpectatorView from './SpectatorView';
-
+import WaitingForPlayers from './WaitingForPlayers';
 
 class SpectatorContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      players: [],
       player1: {
         id: 0,
         name: 'Liv',
@@ -22,6 +23,7 @@ class SpectatorContainer extends Component {
     }; 
     this.handleScore = this.handleScore.bind(this);
     this.handlePlayerJoin = this.handlePlayerJoin.bind(this);
+    this.initializePlayer = this.initializePlayer.bind(this);
   }
 
   componentDidMount() {
@@ -30,34 +32,35 @@ class SpectatorContainer extends Component {
   
   joinRoom() {
     this.gameIO = io('/game');
-    this.gameIO.on('connection', (socket) => {
-      socket.join('gameRoom', () => {
-        let rooms = Objects.keys(socket.rooms);
-        console.log(rooms); // [ <socket.id>, 'room 237' ]
-        io.to('gameRoom', 'a new user has joined the room'); // broadcast to everyone in the room
-      });
-    });
     this.gameIO.emit('spectator join');
     this.gameIO.on('score update', this.handleScore);
     this.gameIO.on('player join', this.handlePlayerJoin);
   }
 
-  handlePlayerJoin(data) {
-    console.log('player joined');
-    console.log(data);
+  handlePlayerJoin({ players }) {
+    this.setState({ players: _.map(players, this.initializePlayer ) });
   }
 
-  handleScore(data) {
-    console.log('score!');
-    console.log(data);
+  handleScore(player) {
+    this.setState(({ players }) => ({
+      players: _.map(players, (p) =>
+        p.id === player.id ? Object.assign(p, { score: player.score }) : p )
+      }
+    ));
+  }
+
+  initializePlayer(player) {
+    return _.defaults(player, { score: 0, name: faker.name.firstName() })
   }
 
   render() {
-    const { player1, player2 } = this.state;
+    const { players } = this.state;
     return (
       <div className="text-center">
-        Waiting for players to join...
-        <SpectatorView player1={player1} player2={player2} />
+        { players.length < 2 ?
+          <WaitingForPlayers players={players} /> :
+          <SpectatorView player1={players[0]} player2={players[1]} />
+        }
       </div>
     );
   } 
