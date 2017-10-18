@@ -1,7 +1,7 @@
 {
   "host": "localhost",
-  "XgameServerHost": "192.168.1.7:8080",
-  "gameServerHost": "172.24.0.30:8080",
+  "XgameServerHost": "172.24.0.30:8080",
+  "gameServerHost": "9fe94d6c.ngrok.io",
   "port": 3030,
   "public": "../public/",
   "paginate": {

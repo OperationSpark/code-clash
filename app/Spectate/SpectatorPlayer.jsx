@@ -70,20 +70,24 @@ class SpectatorPlayer extends Component {
 
   render() {
     const { player, score, name, emoji, testSpec, code } = this.props;
+    const height = _.get($('.CodeMirror-scroll'), '[0].clientHeight') > 330 ? 'big' : 'small';
+    console.log(height);
     return (
-      <div className="face">
-        <h1>Player { player } : { name }</h1>
-        <div style={ this.style() } className="emoji">
-          { this.emoji() }
+      <div>
+        <div className="face">
+          <h1>Player { player } : { name }</h1>
+          <div style={ this.style() } className="emoji">
+            { this.emoji() }
+          </div>
+          <h1>
+            <NumberEasing
+              value={ score || 0 }
+              speed={300}
+            />
+          </h1>
+          { this.flair(`player${ player }`) }
         </div>
-        <h1>
-          <NumberEasing
-            value={ score || 0 }
-            speed={300}
-          />
-        </h1>
-        { this.flair(`player${ player }`) }
-        <div className="text-left">
+        <div className="text-left editor-view" data={ height } >
           <Editor
             code={code}
             hideButtons={true}
