@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import NumberEasing from 'react-number-easing';
 import Flair from './Flair';
 import * as Emojione from 'react-svg-emojione';
-import { TestRunner } from 'code-tester';
+import { Editor } from 'code-tester';
 import { renderIf } from '../helpers';
 
 class SpectatorPlayer extends Component {
@@ -68,7 +68,7 @@ class SpectatorPlayer extends Component {
   }
 
   render() {
-    const { player, score, name, emoji, testSpec } = this.props;
+    const { player, score, name, emoji, testSpec, code } = this.props;
     return (
       <div className="face">
         <h1>Player { player } : { name }</h1>
@@ -82,13 +82,12 @@ class SpectatorPlayer extends Component {
           />
         </h1>
         { this.flair(`player${ player }`) }
-        {renderIf(false && testSpec && testSpec.length)(<TestRunner
-          testSpec={testSpec}
-          codeToTest={player.code}
-          autoRun
-          iFrameUrl="/test-runner.html"
-          testHandlerUrl="/get_results.js"
-        />)}
+        <div className="text-left">
+          <Editor
+            code={code}
+            hideButtons={true}
+          />
+        </div>
       </div>
     );
   }

@@ -29,6 +29,7 @@ class SpectatorView extends Component {
             opponent={player2.score}
             player={1}
             testSpec={testSpec}
+            code={player1.code}
           />
         </div>
         <div id="player2" className="col-md-6">
@@ -38,6 +39,7 @@ class SpectatorView extends Component {
             opponent={player1.score}          
             player={2}
             testSpec={testSpec}
+            code={player2.code}
           />
         </div>
         <button className="col-md-6" onClick={ () => this.scoreUp(player1) }>Player 1 up</button>

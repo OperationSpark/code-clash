@@ -80,7 +80,7 @@ class SpectatorContainer extends Component {
 
   render() {
     const { players, testSpec } = this.state;
-    console.log(players.map(p => p.randomCode));
+
     return (
       <div className="text-center">
         { players.length < 2 ?
