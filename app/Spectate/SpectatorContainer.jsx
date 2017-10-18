@@ -19,6 +19,7 @@ class SpectatorContainer extends Component {
     this.handlePlayerInput = this.handlePlayerInput.bind(this);
     this.initializePlayer = this.initializePlayer.bind(this);
     this.getQuiz = this.getQuiz.bind(this);
+    this.handleWin = this.handleWin.bind(this);
   }
 
   componentDidMount() {
@@ -74,6 +75,12 @@ class SpectatorContainer extends Component {
     }));
   }
 
+  handleWin(...args) {
+    // alert all players of win
+    console.log(args);
+    console.log(this.gameIO);
+  }
+
   initializePlayer(player) {
     return _.defaults(player, { score: 0, name: faker.name.firstName() })
   }
@@ -85,7 +92,7 @@ class SpectatorContainer extends Component {
       <div className="text-center">
         { players.length < 2 ?
           <WaitingForPlayers players={players} /> :
-          <SpectatorView player1={players[0]} player2={players[1]} testSpec={testSpec} />
+          <SpectatorView player1={players[0]} player2={players[1]} testSpec={testSpec} onWin={this.handleWin}/>
         }
       </div>
     );
