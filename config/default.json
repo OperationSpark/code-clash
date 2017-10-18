@@ -1,6 +1,7 @@
 {
   "host": "localhost",
-  "gameServerHost": "192.168.1.7:8080",
+  "XgameServerHost": "192.168.1.7:8080",
+  "gameServerHost": "172.24.0.30:8080",
   "port": 3030,
   "public": "../public/",
   "paginate": {
