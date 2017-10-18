@@ -15,6 +15,7 @@ module.exports = function socketHandler(io) {
     socket.on('score update', broadcastScore.bind(null, socket));
     socket.on('spectator join', sendPlayers.bind(null, socket, players));
     socket.on('player join', handleGame.bind(null, socket));
+    socket.on('player input', broadcastPlayerCode.bind(null, socket));
   });
   
   game.on('disconnect', (socket) => {
@@ -30,6 +31,11 @@ module.exports = function socketHandler(io) {
   const broadcastScore = (socket, { id, score }) => {
     console.log('broacasting score');
     socket.to('gameRoom').emit('score update', { id, score: processScore(score) });
+  };
+
+  const broadcastPlayerCode = (socket, { id, randomCode }) => {
+    console.log('broadcasting code', randomCode);
+    socket.to('gameRoom').emit('player input', { id, randomCode });
   };
 
   const sendPlayers = (socket, players) => {

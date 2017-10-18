@@ -5,14 +5,15 @@ import P from 'bluebird';
 import PropTypes from 'prop-types';
 import io from 'socket.io-client';
 
-import { calcScore } from '../helpers';
+import quizRandomizer from '../helpers/quizRandomizer.js';
+import { calcScore, getRandomLine } from '../helpers';
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = { testSpec: '', starterCode: '', loading: true, boilerplate: '', instructions: '', editMode: false };
     this.renderTester = this.renderTester.bind(this);
-    this.handleUrlInput = this.handleUrlInput.bind(this);
+    this.getQuiz = this.getQuiz.bind(this);
   }
 
   componentDidMount() {
@@ -21,26 +22,20 @@ class App extends Component {
 
   connectToGame() {
     const { server } = window.config;
+    const url = `${server}/code-quiz-prep/final/`;
+
     this.gameIO = io('/game');
-    this.gameIO.on('connection', (socket) => {
-      socket.join('gameRoom', () => {
-        let rooms = Objects.keys(socket.rooms);
-        console.log(rooms); // [ <socket.id>, 'room 237' ]
-        io.to('gameRoom', 'a new user has joined the room'); // broadcast to everyone in the room
-      });
-    });
 
     this.gameIO.on('player join', (data) => console.log('player joined', data));
-    const fakeSubmitEvent = { preventDefault: () => { }, target: { 'code-quiz-url': { value: `${server}/code-quiz-immersion-precourse/exit/` } } };
-    this.handleUrlInput(fakeSubmitEvent);
     this.gameIO.emit('player join', { id: this.props.match.params.playerId });
+    this.getQuiz(url);
   }
 
-  handleUrlInput(event) {
-    event.preventDefault();
-    const url = event.target['code-quiz-url'].value;
+  getQuiz(url) {
+    this.setState({ loading: true });
     getPublicCodeQuiz(url)
       .then(data => {
+        console.log(data);
         this.gameIO.emit('player ready', { message: 'player ready', id: this.props.match.params.playerId})
         this.setState({
           testSpec: data.spec.data,
@@ -59,6 +54,7 @@ class App extends Component {
           error: err,
         });
       });
+      console.log('wgtg');
   }
 
   renderTester() {
@@ -68,16 +64,22 @@ class App extends Component {
         message: 'score update',
         id: playerId,
         score: calcScore(passCount, failCount),
+        failCount,
+        passCount
       });
     };
 
     const handleLintedCode = (lintedCode) => {
+      const { playerId: id } = this.props.match.params;
+      // TODO fix getRandomLine
+      this.gameIO.emit('player input', {
+        randomCode: getRandomLine(lintedCode),
+        id
+      });
     };
 
     const handleAnyCode = (code) => {};
-    const { boilerplate, instructions, editMode } = this.state;
-    let testSpec = '';
-    if (this.state.testSpec.length) testSpec = this.state.testSpec;
+    const { boilerplate, instructions, editMode, testSpec } = this.state;
     return (
       <CodeTester
         initialCode={boilerplate}
@@ -98,8 +100,10 @@ class App extends Component {
 
   render () {
     const { codeQuizUrl } = this.props;
-    const { error } = this.state;
+    const { error, loading } = this.state;
     return (
+      loading ?
+      <div className="text-center">Loading...</div> :
       <div className="container-fluid">
         {error ?
           (<div className="row">

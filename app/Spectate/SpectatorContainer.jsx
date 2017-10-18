@@ -23,6 +23,7 @@ class SpectatorContainer extends Component {
     }; 
     this.handleScore = this.handleScore.bind(this);
     this.handlePlayerJoin = this.handlePlayerJoin.bind(this);
+    this.handlePlayerInput = this.handlePlayerInput.bind(this);
     this.initializePlayer = this.initializePlayer.bind(this);
   }
 
@@ -30,23 +31,32 @@ class SpectatorContainer extends Component {
     this.joinRoom();
   }
   
+  updatePlayer(newPlayer) {
+    return (oldPlayer) => oldPlayer.id === newPlayer.id ? Object.assign(oldPlayer, newPlayer) : oldPlayer;
+  }
+
   joinRoom() {
     this.gameIO = io('/game');
     this.gameIO.emit('spectator join');
     this.gameIO.on('score update', this.handleScore);
     this.gameIO.on('player join', this.handlePlayerJoin);
+    this.gameIO.on('player input', this.handlePlayerInput);
   }
 
   handlePlayerJoin({ players }) {
     this.setState({ players: _.map(players, this.initializePlayer ) });
   }
 
-  handleScore(player) {
+  handleScore({ id, score }) {
     this.setState(({ players }) => ({
-      players: _.map(players, (p) =>
-        p.id === player.id ? Object.assign(p, { score: player.score }) : p )
-      }
-    ));
+      players: _.map(players, this.updatePlayer({ id, score })),
+    }));
+  }
+
+  handlePlayerInput({ id, randomCode }) {
+    this.setState(({ players }) => ({
+      players: _.map(players, this.updatePlayer({ id, randomCode })),
+    }));
   }
 
   initializePlayer(player) {
@@ -55,6 +65,7 @@ class SpectatorContainer extends Component {
 
   render() {
     const { players } = this.state;
+    console.log(players.map(p => p.randomCode));
     return (
       <div className="text-center">
         { players.length < 2 ?
