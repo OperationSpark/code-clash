@@ -68,9 +68,9 @@ class SpectatorContainer extends Component {
     }));
   }
 
-  handlePlayerInput({ id, randomCode }) {
+  handlePlayerInput({ id, randomCode, code }) {
     this.setState(({ players }) => ({
-      players: _.map(players, this.updatePlayer({ id, randomCode })),
+      players: _.map(players, this.updatePlayer({ id, randomCode, code })),
     }));
   }
 

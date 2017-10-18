@@ -69,6 +69,7 @@ class PlayerViewContainer extends Component {
       const { playerId: id } = this.props.match.params;
       this.gameIO.emit('player input', {
         randomCode: getRandomLine(lintedCode),
+        code: lintedCode,
         id
       });
     };

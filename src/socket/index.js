@@ -35,13 +35,12 @@ module.exports = function socketHandler(io) {
   };
 
   const broadcastScore = (socket, { id, score, passCount, failCount }) => {
-    console.log('broacasting score');
+    console.log('broadcasting score');
     socket.to('gameRoom').emit('score update', { id, score: processScore(score), passCount, failCount });
   };
 
-  const broadcastPlayerCode = (socket, { id, randomCode }) => {
-    console.log('broadcasting code', randomCode);
-    socket.to('gameRoom').emit('player input', { id, randomCode });
+  const broadcastPlayerCode = (socket, { id, randomCode, code }) => {
+    socket.to('gameRoom').emit('player input', { id, randomCode, code });
   };
 
   const sendPlayers = (socket, players) => {
