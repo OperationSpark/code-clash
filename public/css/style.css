@@ -71,6 +71,34 @@
   position: relative;
 }
 
+.editor-view {
+  width: 100%;
+  border: 1px solid rgb(117, 115, 115);
+  height: 300px;
+  margin: 15px 0;
+  overflow: hidden;
+}
+
+.editor-view > * {
+  animation: scroll linear forwards infinite;
+}
+
+.editor-view[data="small"] > * {
+  animation-duration: 0s;
+}
+
+.editor-view[data="big"] > * {
+  animation-duration: 20s;
+}
+
+.editor-view button {
+  display: none;
+}
+
+.editor-view .CodeMirror-scroll {
+  height: initial;
+}
+
 .scene {
   margin: auto;
   height: 250px;
