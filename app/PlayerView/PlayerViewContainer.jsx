@@ -31,6 +31,7 @@ class PlayerViewContainer extends Component {
 
   getQuiz(url) {
     this.setState({ loading: true });
+    console.log(url);
     getPublicCodeQuiz(url)
       .then(data => {
         this.gameIO.emit('player ready', { message: 'player ready', id: this.props.match.params.playerId})
