@@ -19,7 +19,7 @@ class SpectatorView extends Component {
   }
 
   render() {
-    const { player1, player2 } = this.props;
+    const { player1, player2, testSpec } = this.props;
     return (
       <div className="row">
         <div id="player1" className="col-md-6">
@@ -28,6 +28,7 @@ class SpectatorView extends Component {
             score={player1.score}
             opponent={player2.score}
             player={1}
+            testSpec={testSpec}
           />
         </div>
         <div id="player2" className="col-md-6">
@@ -36,6 +37,7 @@ class SpectatorView extends Component {
             score={player2.score}
             opponent={player1.score}          
             player={2}
+            testSpec={testSpec}
           />
         </div>
         <button className="col-md-6" onClick={ () => this.scoreUp(player1) }>Player 1 up</button>

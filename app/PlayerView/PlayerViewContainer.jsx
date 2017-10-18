@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
-import CodeTester from 'code-tester';
-import axios from 'axios';
-import P from 'bluebird';
 import PropTypes from 'prop-types';
+import CodeTester from 'code-tester';
 import io from 'socket.io-client';
 
 import quizRandomizer from '../helpers/quizRandomizer.js';
-import { calcScore, getRandomLine } from '../helpers';
+import { calcScore, getRandomLine, getPublicCodeQuiz } from '../helpers';
 
 class PlayerViewContainer extends Component {
   constructor(props) {
@@ -113,22 +111,6 @@ class PlayerViewContainer extends Component {
         }
       </div>
     );
-  }
-}
-
-function getPublicCodeQuiz(codeQuizUrl, isTestMode = true) {
-  return P.join(
-    getPublicResource(codeQuizUrl, 'index.js', isTestMode),
-    getPublicResource(codeQuizUrl, 'README.md', isTestMode),
-    getPublicResource(codeQuizUrl, 'index.spec.js', isTestMode),
-    (boilerplate, instructions, spec) => {
-      return { boilerplate, instructions, spec };
-    }
-  );
-
-  function getPublicResource(projectPath, filename, isTestMode) {
-    const url = `${projectPath.replace(/\/+$/, '')}/${filename}`;
-    return axios.get(url);
   }
 }
 
