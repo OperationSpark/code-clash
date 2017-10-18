@@ -34,9 +34,9 @@ module.exports = function socketHandler(io) {
 
   };
 
-  const broadcastScore = (socket, { id, score }) => {
+  const broadcastScore = (socket, { id, score, passCount, failCount }) => {
     console.log('broacasting score');
-    socket.to('gameRoom').emit('score update', { id, score: processScore(score) });
+    socket.to('gameRoom').emit('score update', { id, score: processScore(score), passCount, failCount });
   };
 
   const broadcastPlayerCode = (socket, { id, randomCode }) => {

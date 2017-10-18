@@ -37,9 +37,9 @@ class SpectatorContainer extends Component {
     this.setState({ players: _.map(players, this.initializePlayer ) });
   }
 
-  handleScore({ id, score }) {
+  handleScore({ id, score, passCount, failCount }) {
     this.setState(({ players }) => ({
-      players: _.map(players, this.updatePlayer({ id, score })),
+      players: _.map(players, this.updatePlayer({ id, score, passCount, failCount })),
     }));
   }
 
