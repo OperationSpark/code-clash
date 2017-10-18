@@ -90,6 +90,8 @@ class PlayerViewContainer extends Component {
         showConsole={false}
         autoRun
         hideEditorButtons={true}
+        markdownOptions={{ sanitize: false }}
+        className="full-width"
       />
     );
   }
