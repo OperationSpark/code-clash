@@ -27,8 +27,8 @@ class PlayerViewContainer extends Component {
     this.gameIO = io('/game');
 
     this.gameIO.on('player join', (data) => console.log('player joined', data));
+    this.gameIO.on('quiz url', this.getQuiz);
     this.gameIO.emit('player join', { id: this.props.match.params.playerId });
-    this.getQuiz(url);
   }
 
   getQuiz(url) {
@@ -100,7 +100,7 @@ class PlayerViewContainer extends Component {
     const { error, loading } = this.state;
     return (
       loading ?
-      <div className="text-center">Loading...</div> :
+      <div className="text-center">Waiting for opponent...</div> :
       <div className="container-fluid">
         {error ?
           (<div className="row">

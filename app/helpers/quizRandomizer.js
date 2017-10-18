@@ -1,3 +1,4 @@
+const { gameServerHost } = require('../../config/default.json');
 const { randomElement } = require('./index.js');
 
 const problems = [
@@ -7,6 +8,6 @@ const problems = [
   '/code-quiz-prep/final/',
 ];
 
-const getRandomQuiz = () => randomElement(problems);
+const getRandomQuiz = () => `http://${gameServerHost}${randomElement(problems)}`;
 
 module.exports = getRandomQuiz;

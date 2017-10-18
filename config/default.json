@@ -1,5 +1,6 @@
 {
   "host": "localhost",
+  "gameServerHost": "192.168.1.7:8080",
   "port": 3030,
   "public": "../public/",
   "paginate": {
