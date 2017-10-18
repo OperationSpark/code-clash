@@ -133,3 +133,7 @@
 .noshadow {
   transition-duration: 1000ms;
 }
+
+.full-width {
+  width: 100%;
+}

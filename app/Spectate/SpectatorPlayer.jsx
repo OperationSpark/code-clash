@@ -21,8 +21,9 @@ class SpectatorPlayer extends Component {
   };
 
   win() {
-    const { score: thisScore, opponent: opponentScore } = this.props;
+    const { score: thisScore, opponent: opponentScore, onWin } = this.props;
     if (thisScore >= 1000) {
+      onWin();
       return true;
     } else if (opponentScore >= 1000) {
       return false;
