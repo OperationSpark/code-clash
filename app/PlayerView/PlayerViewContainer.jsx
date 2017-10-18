@@ -1,18 +1,17 @@
 import React, { Component } from 'react';
-import CodeTester from 'code-tester';
-import axios from 'axios';
-import P from 'bluebird';
 import PropTypes from 'prop-types';
+import CodeTester from 'code-tester';
 import io from 'socket.io-client';
 
-import { calcScore } from '../helpers';
+import quizRandomizer from '../helpers/quizRandomizer.js';
+import { calcScore, getRandomLine, getPublicCodeQuiz } from '../helpers';
 
-class App extends Component {
+class PlayerViewContainer extends Component {
   constructor(props) {
     super(props);
     this.state = { testSpec: '', starterCode: '', loading: true, boilerplate: '', instructions: '', editMode: false };
     this.renderTester = this.renderTester.bind(this);
-    this.handleUrlInput = this.handleUrlInput.bind(this);
+    this.getQuiz = this.getQuiz.bind(this);
   }
 
   componentDidMount() {
@@ -20,24 +19,18 @@ class App extends Component {
   }
 
   connectToGame() {
+    const { server } = window.config;
+    const url = `${server}/code-quiz-prep/final/`;
+
     this.gameIO = io('/game');
-    this.gameIO.on('connection', (socket) => {
-      socket.join('gameRoom', () => {
-        let rooms = Objects.keys(socket.rooms);
-        console.log(rooms); // [ <socket.id>, 'room 237' ]
-        io.to('gameRoom', 'a new user has joined the room'); // broadcast to everyone in the room
-      });
-    });
 
     this.gameIO.on('player join', (data) => console.log('player joined', data));
-    const fakeSubmitEvent = { preventDefault: () => { }, target: { 'code-quiz-url': { value: 'http://localhost:8080/code-quiz-immersion-precourse/exit/' } } };
-    this.handleUrlInput(fakeSubmitEvent);
+    this.gameIO.on('quiz url', this.getQuiz);
     this.gameIO.emit('player join', { id: this.props.match.params.playerId });
   }
 
-  handleUrlInput(event) {
-    event.preventDefault();
-    const url = event.target['code-quiz-url'].value;
+  getQuiz(url) {
+    this.setState({ loading: true });
     getPublicCodeQuiz(url)
       .then(data => {
         this.gameIO.emit('player ready', { message: 'player ready', id: this.props.match.params.playerId})
@@ -67,16 +60,22 @@ class App extends Component {
         message: 'score update',
         id: playerId,
         score: calcScore(passCount, failCount),
+        failCount,
+        passCount
       });
     };
 
     const handleLintedCode = (lintedCode) => {
+      const { playerId: id } = this.props.match.params;
+      this.gameIO.emit('player input', {
+        randomCode: getRandomLine(lintedCode),
+        code: lintedCode,
+        id
+      });
     };
 
     const handleAnyCode = (code) => {};
-    const { boilerplate, instructions, editMode } = this.state;
-    let testSpec = '';
-    if (this.state.testSpec.length) testSpec = this.state.testSpec;
+    const { boilerplate, instructions, editMode, testSpec } = this.state;
     return (
       <CodeTester
         initialCode={boilerplate}
@@ -89,14 +88,18 @@ class App extends Component {
         showLints={true}
         testSpec={testSpec}
         showConsole={false}
+        autoRun
+        hideEditorButtons={true}
       />
     );
   }
 
   render () {
     const { codeQuizUrl } = this.props;
-    const { error } = this.state;
+    const { error, loading } = this.state;
     return (
+      loading ?
+      <div className="text-center">Waiting for opponent...</div> :
       <div className="container-fluid">
         {error ?
           (<div className="row">
@@ -112,24 +115,8 @@ class App extends Component {
   }
 }
 
-function getPublicCodeQuiz(codeQuizUrl, isTestMode = true) {
-  return P.join(
-    getPublicResource(codeQuizUrl, 'index.js', isTestMode),
-    getPublicResource(codeQuizUrl, 'README.md', isTestMode),
-    getPublicResource(codeQuizUrl, 'index.spec.js', isTestMode),
-    (boilerplate, instructions, spec) => {
-      return { boilerplate, instructions, spec };
-    }
-  );
-
-  function getPublicResource(projectPath, filename, isTestMode) {
-    const url = `${projectPath.replace(/\/+$/, '')}/${filename}`;
-    return axios.get(url);
-  }
-}
-
-App.propTypes = {
+PlayerViewContainer.propTypes = {
   codeQuizUrl: PropTypes.string,
 };
 
-export default App;
+export default PlayerViewContainer;

@@ -1,6 +1,7 @@
 /* eslint no-console: warn */
 const _ = require('lodash');
 const { processScore } = require('../helpers/game.js');
+const getRandomQuiz = require('../../app/helpers/quizRandomizer.js');
 
 module.exports = function socketHandler(io) {
   const players = [];
@@ -11,10 +12,10 @@ module.exports = function socketHandler(io) {
     console.log('socket ID', socket.id);
     console.log('players', players);
 
-    // socket.on('game', handleGame.bind(null, socket));
     socket.on('score update', broadcastScore.bind(null, socket));
     socket.on('spectator join', sendPlayers.bind(null, socket, players));
     socket.on('player join', handleGame.bind(null, socket));
+    socket.on('player input', broadcastPlayerCode.bind(null, socket));
   });
   
   game.on('disconnect', (socket) => {
@@ -25,11 +26,21 @@ module.exports = function socketHandler(io) {
     console.log('handling game');
     addPlayer(players, player);
     sendPlayers(socket, players);
+    // if all players ready
+    if (players.length >= 2) {
+      // send randomCodeQuizURL
+      game.emit('quiz url', getRandomQuiz());
+    }
+
   };
 
-  const broadcastScore = (socket, { id, score }) => {
-    console.log('broacasting score');
-    socket.to('gameRoom').emit('score update', { id, score: processScore(score) });
+  const broadcastScore = (socket, { id, score, passCount, failCount }) => {
+    console.log('broadcasting score');
+    socket.to('gameRoom').emit('score update', { id, score: processScore(score), passCount, failCount });
+  };
+
+  const broadcastPlayerCode = (socket, { id, randomCode, code }) => {
+    socket.to('gameRoom').emit('player input', { id, randomCode, code });
   };
 
   const sendPlayers = (socket, players) => {
