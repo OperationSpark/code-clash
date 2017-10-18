@@ -8,7 +8,7 @@ import io from 'socket.io-client';
 import quizRandomizer from '../helpers/quizRandomizer.js';
 import { calcScore, getRandomLine } from '../helpers';
 
-class App extends Component {
+class PlayerViewContainer extends Component {
   constructor(props) {
     super(props);
     this.state = { testSpec: '', starterCode: '', loading: true, boilerplate: '', instructions: '', editMode: false };
@@ -35,7 +35,6 @@ class App extends Component {
     this.setState({ loading: true });
     getPublicCodeQuiz(url)
       .then(data => {
-        console.log(data);
         this.gameIO.emit('player ready', { message: 'player ready', id: this.props.match.params.playerId})
         this.setState({
           testSpec: data.spec.data,
@@ -54,7 +53,6 @@ class App extends Component {
           error: err,
         });
       });
-      console.log('wgtg');
   }
 
   renderTester() {
@@ -71,7 +69,6 @@ class App extends Component {
 
     const handleLintedCode = (lintedCode) => {
       const { playerId: id } = this.props.match.params;
-      // TODO fix getRandomLine
       this.gameIO.emit('player input', {
         randomCode: getRandomLine(lintedCode),
         id
@@ -135,8 +132,8 @@ function getPublicCodeQuiz(codeQuizUrl, isTestMode = true) {
   }
 }
 
-App.propTypes = {
+PlayerViewContainer.propTypes = {
   codeQuizUrl: PropTypes.string,
 };
 
-export default App;
+export default PlayerViewContainer;

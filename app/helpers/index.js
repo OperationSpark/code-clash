@@ -2,6 +2,7 @@ export const calcScore = (passCount = 0, failCount = 0) => passCount / (passCoun
 
 export const renderIf = condition => component => condition && component;
 
-export const randomElement = array => array[Math.floor(Math.random(array.length))];
+export const randomElement = array => array[Math.floor(Math.random() * array.length)];
 
-export const getRandomLine = (str = '') => randomElement(str.split('\n'));
+export const getRandomLine = (str = '') =>
+  randomElement(str.split('\n').map(s => s.trim()).filter(s => s.length));
