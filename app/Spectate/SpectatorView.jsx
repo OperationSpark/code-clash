@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
+import ReactAudioPlayer from 'react-audio-player';
 import SpectatorPlayer from './SpectatorPlayer';
 
 class SpectatorView extends Component {
@@ -22,6 +23,10 @@ class SpectatorView extends Component {
     const { player1, player2, testSpec, onWin } = this.props;
     return (
       <div>
+        <ReactAudioPlayer
+          src="VVVVVV-PushingOnward.mp3"
+          autoPlay
+        />
         <div className="row">
           <div id="player1" className="col-md-6">
             <SpectatorPlayer 

@@ -46,6 +46,7 @@
     "feathers-socketio": "^2.0.0",
     "helmet": "^3.8.1",
     "react": "^15.6.1",
+    "react-audio-player": "^0.6.2",
     "react-dom": "^15.6.1",
     "react-number-easing": "0.0.4",
     "react-router-dom": "^4.2.2",
