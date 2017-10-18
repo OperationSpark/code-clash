@@ -11,7 +11,7 @@ class SplashPageAnimation extends Component {
   render() {
     return (
       <div className="scene row">
-        {<Floater />}
+        <Floater />
         <div className="col-sm-6">
           <div className="emoji">
             <Emojione.smirk />

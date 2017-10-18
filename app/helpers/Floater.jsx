@@ -43,12 +43,10 @@ class Floater extends Component {
   }
 
   append() {
-    console.log('Appending');
     const floater = $('.floater');
     const children = floater.length;
     if (children > 50) {
       floater.remove();
-      console.log(floater);
     }
     const $h4 = $('<h2>')
       .addClass('floater', `floater${Math.floor(Math.random() * 2)}`)

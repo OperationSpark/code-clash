@@ -10,16 +10,6 @@ class SpectatorContainer extends Component {
     super(props);
     this.state = {
       players: [],
-      player1: {
-        id: 0,
-        name: 'Liv',
-        score: 0,
-      }, 
-      player2: {
-        id: 1,
-        name: 'Harvey',
-        score: 0,
-      }
     }; 
     this.handleScore = this.handleScore.bind(this);
     this.handlePlayerJoin = this.handlePlayerJoin.bind(this);

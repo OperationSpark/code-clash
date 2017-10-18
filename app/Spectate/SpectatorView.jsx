@@ -22,20 +22,24 @@ class SpectatorView extends Component {
     const { player1, player2 } = this.props;
     return (
       <div className="row">
-        <SpectatorPlayer 
-          name={player1.name}
-          score={player1.score}
-          opponent={player2.score}
-          player={player1.id}
-        />
-        <SpectatorPlayer 
-          name={player2.name}
-          score={player2.score}
-          opponent={player1.score}          
-          player={player2.id}
-        />
-        <button onClick={ () => this.scoreUp(player1) }>Player 1 up</button>
-        <button onClick={ () => this.scoreUp(player2) }>Player 2 up</button>
+        <div id="player1" className="col-md-6">
+          <SpectatorPlayer 
+            name={player1.name}
+            score={player1.score}
+            opponent={player2.score}
+            player={1}
+          />
+        </div>
+        <div id="player2" className="col-md-6">
+          <SpectatorPlayer 
+            name={player2.name}
+            score={player2.score}
+            opponent={player1.score}          
+            player={2}
+          />
+        </div>
+        <button className="col-md-6" onClick={ () => this.scoreUp(player1) }>Player 1 up</button>
+        <button className="col-md-6" onClick={ () => this.scoreUp(player2) }>Player 2 up</button>
       </div>
     );
   }
