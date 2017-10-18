@@ -1,11 +1,16 @@
 import React from 'react';
 import SpectatorPlayer from './SpectatorPlayer';
+import ReactAudioPlayer from 'react-audio-player';
 
 const WaitingForPlayers = ({ players }) => {
   const playerCount = players.length;
   const [ player1, player2 ] = players;
   return (
     <div className="row">
+      <ReactAudioPlayer
+        src="LinksAwakening-House.mp3"
+        autoPlay
+      />
       <div className={ player1 ? "col-md-6 noshadow" : "col-md-6 shadow" }>
         <SpectatorPlayer 
           name={_.get(player1, 'name') || "?????"}

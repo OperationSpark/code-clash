@@ -66,17 +66,18 @@
   box-sizing: border-box;
   flex-direction: column;
   justify-content: space-between;
-  background: rgb(243, 238, 238);
-  border: 1px solid rgb(117, 115, 115);
+  background: #f7f7f7;
+  border: 1px solid #ddd;
   position: relative;
 }
 
 .editor-view {
   width: 100%;
-  border: 1px solid rgb(117, 115, 115);
+  border: 1px solid #ddd;
   height: 300px;
   margin: 15px 0;
   overflow: hidden;
+  border-radius: 15px;
 }
 
 .editor-view > * {
@@ -99,11 +100,20 @@
   height: initial;
 }
 
+.editor-view .CodeMirror {
+  padding: 0;
+}
+
 .scene {
   margin: auto;
   height: 250px;
   max-width: 900px;
   position: relative;
+}
+
+.mono-text input {
+  width: 350px;
+  margin: auto;
 }
 
 .scene .emoji {
