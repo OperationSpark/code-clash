@@ -82,7 +82,7 @@ class SpectatorPlayer extends Component {
           />
         </h1>
         { this.flair(`player${ player }`) }
-        {renderIf(testSpec && testSpec.length)(<TestRunner
+        {renderIf(false && testSpec && testSpec.length)(<TestRunner
           testSpec={testSpec}
           codeToTest={player.code}
           autoRun
