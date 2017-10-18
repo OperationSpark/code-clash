@@ -34,8 +34,10 @@ class SpectatorPlayer extends Component {
     return <Emojione.innocent />
     } else if (this.win() === false) {
       return <Emojione.dizzy_face />;
-    } else if (score === 0) {
+    } else if (score === null) {
       return <Emojione.sleepy />;
+    } else if (score === 0) {
+      return <Emojione.expressionless />;
     } else if (score < 200) {
       return <Emojione.neutral_face />;
     } else if (score < 400) {
@@ -50,59 +52,34 @@ class SpectatorPlayer extends Component {
   }
 
   flair(id) {
-    $('.boom').removeClass('boom');
+    // TODO: Fix the booms
+    // Because the render for both players if firing this isn't working
+    $(`#${id} .boom`).removeClass('boom');
     const { opponent } = this.props;
     if (this.win() === true) {
-      return <div className="flair-container">
-        { sparkles(10, 'sparkles', this.handleChildUnmount) }
-      </div>;
-    } else if (this.win() === false) {
-      return <div className="flair-container">
-        { boom(10, 'boom', this.handleChildUnmount) }
-      </div>;
-    } else if (opponent === 0) {
-      return <div className="flair-container">
-      </div>;
-    } else if (opponent < 200) {
-      return <div className="flair-container">
-        { boom(1, 'boom', this.handleChildUnmount) }
-      </div>;
-    } else if (opponent < 400) {
-      return <div className="flair-container">
-        { boom(2, 'boom', this.handleChildUnmount) }
-      </div>;
-    } else if (opponent < 600) {
-      return <div className="flair-container">
-        { boom(4, 'boom', this.handleChildUnmount) }
-      </div>;
-    } else if (opponent < 800) {
-      return <div className="flair-container">
-        { boom(6, 'boom', this.handleChildUnmount) }
-      </div>;
-    } else if (opponent < 1000) {
-      return <div className="flair-container">
-        { boom(8, 'boom', this.handleChildUnmount) }
-      </div>;
+      return <div>{ sparkles(10, 'sparkles') }</div>;
+    // } else if (this.win() === false) {
+    //   return <div>{ boom(10, 'boom') }</div>;
+    // } else {
+    //   return <div>{ boom(opponent / 100, 'boom') }</div>;
     }
   }
 
   render() {
     const { player, score, name, emoji } = this.props;
     return (
-      <div className="col-md-6" id={ `player${ player + 1 }` }>
-        <div className="face">
-          <h1>Player { player + 1 } : { name }</h1>
-          <div style={ this.style() } className="emoji">
-            { this.emoji() }
-          </div>
-          <h1>
-            <NumberEasing
-              value={ score }
-              speed={300}
-            />
-          </h1>
+      <div className="face">
+        <h1>Player { player } : { name }</h1>
+        <div style={ this.style() } className="emoji">
+          { this.emoji() }
         </div>
-        { this.flair(`player${ player + 1 }`) }
+        <h1>
+          <NumberEasing
+            value={ score || 0 }
+            speed={300}
+          />
+        </h1>
+        { this.flair(`player${ player }`) }
       </div>
     );
   }
@@ -111,8 +88,8 @@ class SpectatorPlayer extends Component {
 export default SpectatorPlayer;
 
 function sparkles(num, component, unmount) {
-  var result = [];
-  for (var i = 1; i < num + 1; i++) {
+  const result = [];
+  for (let i = 1; i < num + 1; i++) {
     const delay = i * 100;
     if (i < num / 2 + 1) {
       const x1 = `${ 100 / num * 2 * i - 15}%`;
@@ -127,9 +104,9 @@ function sparkles(num, component, unmount) {
   return result;
 }
 
-function boom(num, component, unmount) {
-  var result = [];
-  for (var i = 1; i < num + 1; i++) {
+function boom(num, component) {
+  const result = [];
+  for (let i = 1; i < num + 1; i++) {
     const delay = i * 100;
     if (i < num / 2 + 1) {
       const x1 = `${Math.floor(Math.random() * 80)}%`;
