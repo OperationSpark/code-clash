@@ -9,7 +9,7 @@ const Main = () => (
   <main className="container-fluid main">
     <Switch>
       <Route exact path='/' component={Home} />
-      <Route path='/play/:playerId' component={PlayerViewContainer} />
+      <Route path='/play/:playerId/:name' component={PlayerViewContainer} />
       <Route exact path='/spectate' component={SpectatorContainer} />
     </Switch>
   </main>

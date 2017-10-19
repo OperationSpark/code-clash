@@ -26,7 +26,7 @@ class PlayerViewContainer extends Component {
 
     this.gameIO.on('player join', (data) => console.log('player joined', data));
     this.gameIO.on('quiz url', this.getQuiz);
-    this.gameIO.emit('player join', { id: this.props.match.params.playerId });
+    this.gameIO.emit('player join', { id: this.props.match.params.playerId, name: this.props.match.params.name });
   }
 
   getQuiz(url) {

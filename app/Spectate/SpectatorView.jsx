@@ -51,7 +51,7 @@ class SpectatorView extends Component {
             />
           </div>
         </div>
-        <div className="row">
+        <div className="row invisible">
           <div className="col-md-6">
             <button className="btn btn-primary" onClick={ () => this.scoreUp(player1) }>Player 1 up</button>
           </div>

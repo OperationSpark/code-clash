@@ -82,7 +82,7 @@ class SpectatorContainer extends Component {
   }
 
   initializePlayer(player) {
-    return _.defaults(player, { score: 0, name: faker.name.firstName() })
+    return _.defaults(player, { score: 0 })
   }
 
   render() {
