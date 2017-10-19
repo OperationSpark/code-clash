@@ -70,7 +70,7 @@ class SpectatorPlayer extends Component {
 
   render() {
     const { player, score, name, emoji, testSpec, code } = this.props;
-    const height = _.get($('.CodeMirror-scroll'), '[0].clientHeight') > 330 ? 'big' : 'small';
+    const height = _.get($('.CodeMirror-scroll'), '[0].clientHeight') > 200 ? 'big' : 'small';
     console.log(height);
     return (
       <div>
