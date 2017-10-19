@@ -23,7 +23,7 @@ module.exports = function socketHandler(io) {
   });
 
   const handleGame = (socket,  player ) => {
-    console.log('handling game');
+    console.log('handling game', player);
     addPlayer(players, player);
     sendPlayers(socket, players);
     // if all players ready
@@ -51,6 +51,7 @@ module.exports = function socketHandler(io) {
 };
 
 function addPlayer(players, newPlayer) {
-  !_.some(players, player => _.includes(player, newPlayer.id)) && players.push(newPlayer);
+  // !_.some(players, player => _.includes(player, newPlayer.id)) && players.push(newPlayer);
+  players[newPlayer.id - 1] = newPlayer;
 }
 
